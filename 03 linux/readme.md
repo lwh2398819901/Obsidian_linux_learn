@@ -8,4 +8,5 @@
 ## ![[03 linux/linux系统编程/readme#linux系统编程]]
 
 ## ![[03 linux/linux通用服务框架/readme#linux通用服务框架]]
+## ![[03 linux/linux命令/readme#linux 命令]]
 

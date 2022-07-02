@@ -38,7 +38,7 @@ dd if=/dev/zeroof=/var/loop.img bs=1M count=10240
 losetup /dev/loop0/var/loop.img
 ```
 
-通过lsblk查看刚刚创建的块设备
+通过[[l#lsblk|lsblk]]查看刚刚创建的块设备
 
 ```bash
 lsblk|grep loop0
