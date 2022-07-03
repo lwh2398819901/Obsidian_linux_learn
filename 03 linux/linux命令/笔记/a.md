@@ -1,3 +1,6 @@
+## a
+```toc 
+```
 ## arp
 相关配置文件　
 - /etc/hosts: 
@@ -17,7 +20,7 @@ ff02::2 ip6-allrouters
 
 ```
 
-***arp -a***  ：第一列内容参考/etc/hosts文件内容　查询不到则想dns服务器查询　仍查询不到显示？
+***arp -a***  ：第一列内容参考/etc/hosts文件内容　查询不到则向dns服务器查询　仍查询不到显示？
 ```bash
 uos@uos-PC ~/Desktop> arp -a
 ? (10.10.77.206) at 00:e0:70:c4:64:ef [ether] on eno1
