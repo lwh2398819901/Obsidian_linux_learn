@@ -1,4 +1,0 @@
-## SQL
-```toc
-```
-## [[mysql/readme]]
