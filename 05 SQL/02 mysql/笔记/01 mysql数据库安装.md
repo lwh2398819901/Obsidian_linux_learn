@@ -1,43 +1,53 @@
-##  01 mysql数据库安装
+## 01 mysql数据库安装
+
 ```toc
 ```
 
 ## 数据库版本
+
 - 社区版：MySQL Community Edition (GPL)
- 1. 可以看做企业版本的广泛体验版，未经各个系统平台的压力测试和性能测试
- 2. 基于gpl协议发布，可以随意下载使用
- 3. 没有官方技术支持服务
+
+1. 可以看做企业版本的广泛体验版，未经各个系统平台的压力测试和性能测试
+2. 基于gpl协议发布，可以随意下载使用
+3. 没有官方技术支持服务
+
 - 企业版：MySQL Enterprise Edition(commercial)
   1. 提供比较全面的高级功能，管理工具以及技术支持
   2. 安全性，稳定性，可扩展性比较好
 - 集群版：MySQL Cluster CGE(commercial)
 
 ## 下载与安装
-mysql 官网 ：https://www.mysql.com/
-mysql 官网安装手册:https://dev.mysql.com/doc/relnotes/mysql/5.6/en/
+
+mysql 官网 ：<https://www.mysql.com/>
+mysql 官网安装手册:<https://dev.mysql.com/doc/relnotes/mysql/5.6/en/>
 ![[Pasted image 20220703205349.png]]
 ![[Pasted image 20220703205427.png]]
 ![[Pasted image 20220703212739.png]]
 
 ### 源码包安装
+
 通过官网下载源码包后，在linux平台下编译安装
-https://dev.mysql.com/doc/refman/5.6/en/source-installation.html
+<https://dev.mysql.com/doc/refman/5.6/en/source-installation.html>
 
 #### 先决条件
+
 - CMAKE
 - MAKE
 - GCC
 - perl
 - 足够的内存
 - ncurses库
+
 ![[Pasted image 20220704151522.png]]
 
 #### 配置
-https://dev.mysql.com/doc/refman/5.6/en/source-configuration-options.html
+
+<https://dev.mysql.com/doc/refman/5.6/en/source-configuration-options.html>
 ![[Pasted image 20220704151817.png]]
 ![[Pasted image 20220704154133.png]]
 
 1. 编写cmake.sh文件
+
 ```bash
 #!/bin/bash
 cmake . \
@@ -55,46 +65,55 @@ cmake . \
 -DDEFAULT_CHARSET=utf8mb4 \
 -DDEFAULT_COLLATION=utf8mb4_general_ci
 ```
+
 2.添加执行权限
+
 ```bash
 	chmod a+x ./cmake.sh
 ```
+
 3.执行配置
+
 ```bash
 	./cmake.sh
 ```
 
 #### 编译 && 安装
+
 ```bash
 	make && make install
 ```
 
 #### 后续配置
+
 与二进制安装方式类似
 
-
-
 ### 二进制安装
-#### RPM安装
-#### DPKG安装
-#### 基于glbc版本
-安装手册：https://dev.mysql.com/doc/refman/5.6/en/binary-installation.html
 
--   MySQL 依赖于该`libaio` 库。如果未在本地安装此库，则数据目录初始化和后续服务器启动步骤将失败。如有必要，请使用适当的包管理器安装它。例如，在基于 Yum 的系统上：
-    
-    ```terminal
-    $> yum search libaio  # search for info
-    $> yum install libaio # install library
-    ```
-    
-    或者，在基于 APT 的系统上：
-    
-    ```terminal
-    $> apt-cache search libaio # search for info
-    $> apt-get install libaio1 # install library
-    ```
+#### RPM安装
+
+#### DPKG安装
+
+#### 基于glbc版本
+
+安装手册：<https://dev.mysql.com/doc/refman/5.6/en/binary-installation.html>
+
+- MySQL 依赖于该`libaio` 库。如果未在本地安装此库，则数据目录初始化和后续服务器启动步骤将失败。如有必要，请使用适当的包管理器安装它。例如，在基于 Yum 的系统上：
+
+  ```terminal
+  $> yum search libaio  # search for info
+  $> yum install libaio # install library
+  ```
+
+  或者，在基于 APT 的系统上：
+
+  ```terminal
+  $> apt-cache search libaio # search for info
+  $> apt-get install libaio1 # install library
+  ```
 
 要安装和使用 MySQL 二进制发行版，命令序列如下所示：
+
 ```bash
 
 //安装
@@ -189,14 +208,32 @@ Thanks for using MySQL!
 Cleaning up...
 
 
-
-
-//测试登录
 //设置mysql命令行环境变量
 $> vim ~/.bashrc 
 export PATH=$PATH:/usr/local/mysql/bin
-
 $> source ~/.bashrc 
-$> mysql -u root -p
 ```
 
+## 登录连接
+```
+//测试登录
+$> mysql -u root -p
+```
+本地远程连接阿里云服务器上的MySQL数据库实现：<https://blog.csdn.net/hongfei568718926/article/details/107888670>
+
+
+## mysql客户端工具
+![[Pasted image 20220705232729.png]]
+## mysql管理工具
+__mysqladmin__
+![[Pasted image 20220705232918.png]]
+
+## mysql 启动过程
+![[Pasted image 20220705234919.png]]
+![[Pasted image 20220705234606.png]]
+
+## 排错
+![[Pasted image 20220705235716.png]]
+
+### 错误日志位置
+/usr/local/mysql/data/xxx.err
