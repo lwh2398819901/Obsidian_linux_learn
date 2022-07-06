@@ -224,8 +224,7 @@ $> mysql -u root -p
 
 ## mysql客户端工具
 ![[Pasted image 20220705232729.png]]
-## mysql管理工具
-__mysqladmin__
+## mysqladmin
 ![[Pasted image 20220705232918.png]]
 
 ## mysql 启动过程
@@ -237,3 +236,4 @@ __mysqladmin__
 
 ### 错误日志位置
 /usr/local/mysql/data/xxx.err
+
