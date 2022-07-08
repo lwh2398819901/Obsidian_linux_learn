@@ -265,7 +265,7 @@ mysql> SHOW ENGINES;
 由上面命令输出，可见当前系统的默认数据表类型是InnoDB。当然，我们可以通过修改数据库配置文件中的选项，设定默认表类型。
 
 **设置存储引擎**\
-对上面数据库存储引擎有所了解之后，你可以在`my.cnf` 配置文件中设置你需要的存储引擎，这个参数放在 [mysqld] 这个字段下面的 default_storage_engine 参数值，例如下面配置的片段
+对上面数据库存储引擎有所了解之后，你可以在[[02-2 mysql数据库物理文件介绍(日志，存储文件以及配置文件说明)#mysql配置文件#my cnf|my.cnf]]配置文件中设置你需要的存储引擎，这个参数放在 [mysqld] 这个字段下面的 default_storage_engine 参数值，例如下面配置的片段
 
 ```text
 [mysqld] 
@@ -307,5 +307,5 @@ default_storage_engine=CSV
 
 
 ## 参考链接
-mysql 体系结构：<http://c.biancheng.net/view/7939.html>
+[mysql 体系结构](http://c.biancheng.net/view/7939.html)
 

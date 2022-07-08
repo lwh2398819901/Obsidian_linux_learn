@@ -1,15 +1,14 @@
-## 02-2 mysql数据库物理文件介绍
+## 02-2 mysql数据库物理文件介绍(日志，存储文件以及配置文件说明)
 
 ```toc
 ```
 
-## mysql数据库物理文件
+## mysql日志
 
 ### 临时开启日志方式
 可以通过启动数据库时候，传参数方式 临时开启日志。具体方法自行百度。
 
-### 日志文件
-
+### 日志类型简介
 | 日志类型     | 介绍 | 默认值 |
 | ------------ | ---- | ------ |
 | 错误日志     |   mysqld 启动和停止，以及服务器在运行过程中发生的错误及警告相关信息    |    开启    |
@@ -121,7 +120,7 @@ relay_log_purge = 1
 relay_log_recovery = 1
 ```
 
-### 数据文件
+## mysql数据文件
 1. **.frm文件：** 保存每个数据表的元数据(meta)信息，包括表结构的定义等，.frm文件跟数据库存储引擎无关，也就是任何存储引擎的数据表都必须有.frm文件，命名方式为数据表名.frm，如user.frm. .frm文件可以用来在数据库崩溃时恢复表结构。
 2. **.MYD文件：** myisam引擎专用，存放myisam表的数据信息，每个表对应一个.MYD文件。
 3. **.MYI文件：** myisam引擎专用，存放myisam表的索引信息。一般查询缓存主要来源就是.MYI文件中，每个表对应一个.MYI文件。
@@ -129,13 +128,63 @@ relay_log_recovery = 1
 5. **.ibdata文件：** innoDB引擎存放数据和索引。共享表空间，所有表共同使用一个（或多个，自行配置），典型的是系统库的表。
 6. **db.opt文件：** 每个自建的库都有一个，记录库的默认字符集和校验规则
 
+### mysql配置文件
+#### my.cnf
+- 存放位置以及读取规则
+$basedir(mysql安装目录)/my.cnf--> $datadir(mysql 数据目录)/my.cnf
+-->/etc/my.cnf-->/etc/mysql/my.cnf-->~/.my.cnf
+
+- 如何重新加载配置
+ 重启mysqld服务
+ systemctl restart mysql.service
+- 配置说明
 
 
 
+## mysql事务
 
+默认情况下mysql自动提交事务。
 
+通过autocommit变量控制是否自动提交。
+查看autocommit
+```mysql
+mysql> show variables like 'autocommit';
++---------------+-------+
+| Variable_name | Value |
++---------------+-------+
+| autocommit    | ON    |
++---------------+-------+
+1 row in set (0.00 sec)
+```
+autocommit = on 表示自动提交
+
+临时关闭自动提交
+```mysql
+mysql> set autocommit=OFF;
+Query OK, 0 rows affected (0.00 sec)
+```
+
+永久关闭自动提交
+```bash
+# relay log 相关配置,从库端设置
+
+vim /etc/my.cnf
+
+[mysqld]
+autocommit=0
+or
+autocommit=OFF
+```
+
+[[基础知识#DDL\|DDL]] 语句执行时，会自动提交上面未提交的事务。
+
+手动控制事务
+```bash
+commit 提交
+rollback 回滚
+```
 
 
 ## 参考链接
-MySQL数据库存储引擎简介:<https://zhuanlan.zhihu.com/p/59056833>
-MySQL中常见的几种日志汇总:<https://www.jb51.net/article/193917.htm#:~:text=MySQL%E4%B8%AD%E5%B8%B8%E8%A7%81%E7%9A%84%E5%87%A0%E7%A7%8D%E6%97%A5%E5%BF%97%E6%B1%87%E6%80%BB%201%20%E9%94%99%E8%AF%AF%E6%97%A5%E5%BF%97%EF%BC%88errorlog%EF%BC%89%202%20%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97%EF%BC%88slow%20query%20log%EF%BC%89,3%20%E4%B8%80%E8%88%AC%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97%EF%BC%88general%20log%EF%BC%89%204%20%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%97%A5%E5%BF%97%EF%BC%88binlog%EF%BC%89%205%20%E4%B8%AD%E7%BB%A7%E6%97%A5%E5%BF%97%EF%BC%88relay%20log%EF%BC%89>
+[MySQL数据库存储引擎简介](https://zhuanlan.zhihu.com/p/59056833)
+[MySQL中常见的几种日志汇总](https://www.jb51.net/article/193917.htm#:~:text=MySQL%E4%B8%AD%E5%B8%B8%E8%A7%81%E7%9A%84%E5%87%A0%E7%A7%8D%E6%97%A5%E5%BF%97%E6%B1%87%E6%80%BB%201%20%E9%94%99%E8%AF%AF%E6%97%A5%E5%BF%97%EF%BC%88errorlog%EF%BC%89%202%20%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97%EF%BC%88slow%20query%20log%EF%BC%89,3%20%E4%B8%80%E8%88%AC%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97%EF%BC%88general%20log%EF%BC%89%204%20%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%97%A5%E5%BF%97%EF%BC%88binlog%EF%BC%89%205%20%E4%B8%AD%E7%BB%A7%E6%97%A5%E5%BF%97%EF%BC%88relay%20log%EF%BC%89)

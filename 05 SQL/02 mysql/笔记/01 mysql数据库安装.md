@@ -121,7 +121,7 @@ $> groupadd mysql   							//创建mysql组（可不创建）
 $> useradd -r -g mysql -s /bin/false mysql 		//创建mysql用户 并且设置为不可登录
 $> mkdir /usr/local/mysql 						//创建目录
 $> tar zxvf _/path/to/mysql-VERSION-OS_.tar.gz 	//解压mysql tar包
-$> cp  ./mysql-VERSION-OS/*  /usr/local/mysql	//拷贝mysql tar包下所有文件到/usr/local/mysql下
+$> cp  -r ./mysql-VERSION-OS/*  /usr/local/mysql	//拷贝mysql tar包下所有文件到/usr/local/mysql下
 $> chown -R mysql.mysql /usr/local/mysql   		//更改目录权限
 
 

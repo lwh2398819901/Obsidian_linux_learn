@@ -8,13 +8,12 @@ title: "## udev"
 而根据设备的___物理属性或配置特征___创建有意义的符号链接名称或网络接口名称，就可以在物理设备与设备文件之间___建立稳定的对应关系___。
 在linux中，实现在物理设备与设备文件之间__建立稳定的对应关系__的方式之一就是udev。
 ![[udev流程图.excalidraw]]
+
 ## udev 描述
 
 udev守护进程([systemd-udevd.service(8)](http://www.jinbuguo.com/systemd/systemd-udevd.service.html#))从内核接收设备的插入，拔出，改变状态等事件，并根据这些事件的各种属性，到规则库中进行匹配，以确定触发事件的设备。被匹配成功的规则有可能提供额外的设备信息，这些信息可能会被记录到udev的数据库中，也可能会被用于创建符号链接。
 
 udev处理的所有设备信息都存储在udev数据库中， 并且会发送给可能的设备事件的订阅者。 可以通过 libudev 库访问udev数据库以及设备事件源。
-
-
 
 ## **使用udev的好处**
 
@@ -78,13 +77,15 @@ liuwh@liuwh-PC /u/l/u/rules.d> ls
 udevadm info --query=all --name=sda
 ```
 
-| 匹配键              | 解释                                                                                                                                               |
-| --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ACTION          | 事件 (uevent) 的行为，例如：add( 添加设备 )、remove( 删除设备 )。                                                                                  |
-| KERNEL          | 匹配设备的内核名称。"内核名称"是指设备在sysfs里的名称，也就是默认的设备文件名称，例如"sda"。我理解就是内核分配的设备名称，不是udev规则分配的名字   |
-| DEVPATH         | 匹配设备的路径(也就是该设备在sysfs文件系统下的相对路径)。举例：/dev/sda1 对应的 devpath 是 /block/sda/sda1 (一般对应着 /sys/block/sda/sda1 目录)。 |
-| SUBSYSTEM       | 设备的子系统名称，例如：sda 的子系统为 block。                                                                                                     |
-                                                                                                                                                  |
+| 匹配键       | 解释                                                                                                         |
+| --------- | ---------------------------------------------------------------------------------------------------------- |
+| ACTION    | 事件 (uevent) 的行为，例如：add( 添加设备 )、remove( 删除设备 )。                                                             |
+| KERNEL    | 匹配设备的内核名称。"内核名称"是指设备在sysfs里的名称，也就是默认的设备文件名称，例如"sda"。我理解就是内核分配的设备名称，不是udev规则分配的名字                           |
+| DEVPATH   | 匹配设备的路径(也就是该设备在sysfs文件系统下的相对路径)。举例：/dev/sda1 对应的 devpath 是 /block/sda/sda1 (一般对应着 /sys/block/sda/sda1 目录)。 |
+| SUBSYSTEM | 设备的子系统名称，例如：sda 的子系统为 block。                                                                               |
+
+//TODO 还有很多没有列出来 之后有空补上
+
 #### 操作符
 
 | 操作符 | 匹配或赋值 | 解释                            |
@@ -119,7 +120,7 @@ ACTION=="add", SUBSYSTEM=="usb", RUN+="lmt-udev force"
 
 ## 参考链接：
 
-1. udev 中文手册 <http://www.jinbuguo.com/systemd/udev.html>译者：**[金步国](http://www.jinbuguo.com/)**
-2. udev 入门：管理设备事件的 Linux 子系统<https://zhuanlan.zhihu.com/p/51984452>
-3. udev规则以及编写<https://www.cnblogs.com/fah936861121/p/6496608.html>
-4.udev udevadm介绍及linux设备重命名和自动挂载应用实例分析 <https://blog.csdn.net/li_wen01/article/details/89435306>
+1. [udev 中文手册 ](http://www.jinbuguo.com/systemd/udev.html)译者：**[金步国](http://www.jinbuguo.com/)**
+2. [udev 入门：管理设备事件的 Linux 子系统](https://zhuanlan.zhihu.com/p/51984452)
+3. [udev规则以及编写](https://www.cnblogs.com/fah936861121/p/6496608.html)
+4. [udev udevadm介绍及linux设备重命名和自动挂载应用实例分析](https://blog.csdn.net/li_wen01/article/details/89435306)

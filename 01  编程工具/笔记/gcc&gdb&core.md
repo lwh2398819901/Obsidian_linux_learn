@@ -36,7 +36,7 @@ core意指core memory，用线圈做的内存。如今 ，半导体工业澎勃�
 - 在/etc/profile 中增加一行 ulimit -c unlimited 
 - 在/etc/security/limits.conf最后增加如下两行记录：
 
-```javascript
+```bash
 @root soft core unlimited
 @root hard core unlimited
 ```
