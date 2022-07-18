@@ -130,20 +130,23 @@ relay_log_recovery = 1
 
 ### mysql配置文件
 #### my.cnf
-- 存放位置以及读取规则
-$basedir(mysql安装目录)/my.cnf--> $datadir(mysql 数据目录)/my.cnf
--->/etc/my.cnf-->/etc/mysql/my.cnf-->~/.my.cnf
+- ***存放位置以及读取规则  按照如下顺序读取***
+1. $basedir(mysql安装目录)/my.cnf  
+2. $datadir(mysql 数据目录)/my.cnf   
+3. /etc/my.cnf   
+4. /etc/mysql/my.cnf
+5. ~/.my.cnf
 
-- 如何重新加载配置
+- ***如何重新加载配置***
  重启mysqld服务
  systemctl restart mysql.service
-- 配置说明
+- ***配置说明***
 
 
 
 ## mysql事务
 
-默认情况下mysql自动提交事务。
+默认情况下mysql自动提交事务
 
 通过autocommit变量控制是否自动提交。
 查看autocommit
