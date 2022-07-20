@@ -141,7 +141,7 @@ relay_log_recovery = 1
  重启mysqld服务
  systemctl restart mysql.service
 - ***配置说明***
-
+https://kalacloud.com/blog/how-to-edit-mysql-configuration-file-my-cnf-ini/
 
 
 ## mysql事务

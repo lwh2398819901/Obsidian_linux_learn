@@ -1,4 +1,4 @@
-## 01 mysql数据库安装
+## 01 mysql数据库安装与登录
 
 ```toc
 ```
@@ -221,6 +221,78 @@ $> mysql -u root -p
 ```
 本地远程连接阿里云服务器上的MySQL数据库实现：<https://blog.csdn.net/hongfei568718926/article/details/107888670>
 
+### c API链接
+https://www.jianshu.com/p/8229bf719163
+```c
+#include <iostream>
+#include <mysql/mysql.h> //mysql提供的函数接口头文件
+
+using namespace std;
+
+int main() {
+    const char* host = "39.107.72.14"; //主机名
+    const char* user = "root"; //用户名
+    const char* pwd = "123"; //密码
+    const char* dbName = "testDB"; //数据库名称
+    int port = 3306; //端口号
+
+    // 创建mysql对象
+    MYSQL *sql = nullptr;
+    sql = mysql_init(sql);
+    if (!sql) {
+        cout << "MySql init error!" << endl;
+		return -1;
+    }
+    
+    // 连接mysql
+    sql = mysql_real_connect(sql, host, user, pwd, dbName, port, nullptr, 0);
+    if (!sql) {
+        cout << "MySql Connect error!" << endl;
+	   return -1;
+    }
+
+    // 执行命令
+    int ret = mysql_query(sql, "select * from t1");
+    if (ret) {
+        cout << "error!" << endl;
+    } else {
+        cout << "success!" << endl;
+    }
+
+    //获取结果集  
+	MYSQL_RES*res;
+    if (!(res = mysql_store_result(sql)))   //获得sql语句结束后返回的结果集  
+    {
+        printf("Couldn't get result from %s\n", mysql_error(sql));
+        return -1;
+    }
+
+
+    //打印数据行数  
+    printf("number of dataline returned: %d\n", mysql_affected_rows(sql));
+
+    //获取字段的信息  
+    char *str_field[32];  //定义一个字符串数组存储字段信息  
+    for (int i = 0; i<3; i++)  //在已知字段数量的情况下获取字段名  
+    {
+        str_field[i] = mysql_fetch_field(res)->name;
+    }
+    for (int i = 0; i<3; i++)  //打印字段  
+        printf("%10s\t", str_field[i]);
+    printf("\n");
+    //打印获取的数据  
+	MYSQL_ROW column; //一个行数据的类型安全(type-safe)的表示，表示数据行的列  
+    while (column = mysql_fetch_row(res))   //在已知字段数量情况下，获取并打印下一行  
+    {
+        printf("%10s\t%10s\t%10s\n", column[0], column[1], column[2]);  //column是列数组  
+    }
+    
+    // 关闭mysql
+    mysql_close(sql);
+    return 0;
+}
+
+```
 
 ## mysql客户端工具
 ![[Pasted image 20220705232729.png]]
@@ -237,3 +309,6 @@ $> mysql -u root -p
 ### 错误日志位置
 /usr/local/mysql/data/xxx.err
 
+
+## 参考链接
+https://blog.csdn.net/weixin_42734930/article/details/81743047
